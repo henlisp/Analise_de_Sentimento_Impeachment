@@ -1,0 +1,140 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 > library(readxl)\
+> library(dplyr)\
+> getwd()\
+[1] "/Users/HenriqueLispector/Desktop"\
+> df <- read_excel("/Users/HenriqueLispector/Desktop/Wordcloud Impeachment/todos.xlsx")\
+> df <- as.data.frame(df)\
+> Sys.setlocale("LC_ALL", "pt_BR.ISO8859-1")\
+[1] "pt_BR.ISO8859-1/pt_BR.ISO8859-1/pt_BR.ISO8859-1/C/pt_BR.ISO8859-1/C"\
+> class(df$Deputado)\
+[1] "character"\
+> library(stringi)\
+> df$Deputado <- stri_trans_general(df$Deputado, "Latin-ASCII")\
+> df$Fala <- stri_trans_general(df$Fala, "Latin-ASCII")\
+> head(df)\
+           Deputado Partido Estado   Voto G
+\f1 \uc0\u65533 
+\f0 nero\
+1  Abel Mesquita Jr     DEM     RR    Sim         M\
+2    Carlos Andrade     PHS     RR    Sim         M\
+3        Edio Lopes      PR     RR N
+\f1 \uc0\u65533 
+\f0 o         M\
+4   Hiran Goncalves      PP     RR    Sim         M\
+5 Jhonatan de Jesus     PRB     RR    Sim         M\
+6      Maria Helena     PSB     RR    Sim         F\
+                                                                                                                                                                                                                                                                                                              Fala\
+1 Roraima, veras que o filho teu nao foge a luta! O povo brasileiro merece respeito! Por um Brasil com justica, igualdade social e sem corrupcao, por uma Roraima desacorrentada, para que possamos exercer o direito constitucional de ir e vir e por todas as familias roraimenses, eu voto sim, Sr. Presidente.\
+2                                                                                                                                                 Sr. Presidente, esta nao e uma historia de ricos contra pobres nem da direita contra a esquerda, mas e da Nacao contra a corrupcao. Eu voto sim, Sr. Presidente!\
+3                                                                                                                                                                                                 Sr. Presidente, o meu voto e contra o prosseguimento do processo de impedimento da Sra. Presidente da Republica.\
+4                                                       Sr. Presidente, meu querido Brasil, pela minha familia; pelos que me fizeram chegar ate aqui; pelos medicos do Brasil, para que sejam respeitados pelo proximo governo; pelos macons do Brasil e pelo bem do povo brasileiro, eu voto sim, Sr. Presidente.\
+5                                                                                                                   Sr. Presidente, nem a favor do PMDB nem a favor do PT, com a consciencia do povo brasileiro eu voto sim. Eu digo, ao meu Estado de Roraima e aos medicos brasileiros, sim, contra a corrupcao.\
+6                                                                                                                                                                             Por Roraima e pelo povo brasileiro que foi as ruas pedindo mudancas e um Brasil melhor; nao podemos desistir do Brasil. Eu voto sim.\
+> df1 <- df %>% select(Deputado, Fala)\
+> head(df1)\
+           Deputado\
+1  Abel Mesquita Jr\
+2    Carlos Andrade\
+3        Edio Lopes\
+4   Hiran Goncalves\
+5 Jhonatan de Jesus\
+6      Maria Helena\
+                                                                                                                                                                                                                                                                                                              Fala\
+1 Roraima, veras que o filho teu nao foge a luta! O povo brasileiro merece respeito! Por um Brasil com justica, igualdade social e sem corrupcao, por uma Roraima desacorrentada, para que possamos exercer o direito constitucional de ir e vir e por todas as familias roraimenses, eu voto sim, Sr. Presidente.\
+2                                                                                                                                                 Sr. Presidente, esta nao e uma historia de ricos contra pobres nem da direita contra a esquerda, mas e da Nacao contra a corrupcao. Eu voto sim, Sr. Presidente!\
+3                                                                                                                                                                                                 Sr. Presidente, o meu voto e contra o prosseguimento do processo de impedimento da Sra. Presidente da Republica.\
+4                                                       Sr. Presidente, meu querido Brasil, pela minha familia; pelos que me fizeram chegar ate aqui; pelos medicos do Brasil, para que sejam respeitados pelo proximo governo; pelos macons do Brasil e pelo bem do povo brasileiro, eu voto sim, Sr. Presidente.\
+5                                                                                                                   Sr. Presidente, nem a favor do PMDB nem a favor do PT, com a consciencia do povo brasileiro eu voto sim. Eu digo, ao meu Estado de Roraima e aos medicos brasileiros, sim, contra a corrupcao.\
+6                                                                                                                                                                             Por Roraima e pelo povo brasileiro que foi as ruas pedindo mudancas e um Brasil melhor; nao podemos desistir do Brasil. Eu voto sim.\
+> df1 <- df1 %>% mutate(comment_id = row_number())\
+> head(df1)\
+           Deputado\
+1  Abel Mesquita Jr\
+2    Carlos Andrade\
+3        Edio Lopes\
+4   Hiran Goncalves\
+5 Jhonatan de Jesus\
+6      Maria Helena\
+                                                                                                                                                                                                                                                                                                              Fala\
+1 Roraima, veras que o filho teu nao foge a luta! O povo brasileiro merece respeito! Por um Brasil com justica, igualdade social e sem corrupcao, por uma Roraima desacorrentada, para que possamos exercer o direito constitucional de ir e vir e por todas as familias roraimenses, eu voto sim, Sr. Presidente.\
+2                                                                                                                                                 Sr. Presidente, esta nao e uma historia de ricos contra pobres nem da direita contra a esquerda, mas e da Nacao contra a corrupcao. Eu voto sim, Sr. Presidente!\
+3                                                                                                                                                                                                 Sr. Presidente, o meu voto e contra o prosseguimento do processo de impedimento da Sra. Presidente da Republica.\
+4                                                       Sr. Presidente, meu querido Brasil, pela minha familia; pelos que me fizeram chegar ate aqui; pelos medicos do Brasil, para que sejam respeitados pelo proximo governo; pelos macons do Brasil e pelo bem do povo brasileiro, eu voto sim, Sr. Presidente.\
+5                                                                                                                   Sr. Presidente, nem a favor do PMDB nem a favor do PT, com a consciencia do povo brasileiro eu voto sim. Eu digo, ao meu Estado de Roraima e aos medicos brasileiros, sim, contra a corrupcao.\
+6                                                                                                                                                                             Por Roraima e pelo povo brasileiro que foi as ruas pedindo mudancas e um Brasil melhor; nao podemos desistir do Brasil. Eu voto sim.\
+  comment_id\
+1          1\
+2          2\
+3          3\
+4          4\
+5          5\
+6          6\
+> library(lexiconPT)\
+> library(tidytext)\
+> df1_unnested <- df1 %>% unnest_tokens(term, Fala)\
+> head(df1_unnested)\
+            Deputado comment_id    term\
+1   Abel Mesquita Jr          1 roraima\
+1.1 Abel Mesquita Jr          1   veras\
+1.2 Abel Mesquita Jr          1     que\
+1.3 Abel Mesquita Jr          1       o\
+1.4 Abel Mesquita Jr          1   filho\
+1.5 Abel Mesquita Jr          1     teu\
+> df1_unnested %>%\
++   select(comment_id, term) %>%\
++   head(20)\
+     comment_id       term\
+1             1    roraima\
+1.1           1      veras\
+1.2           1        que\
+1.3           1          o\
+1.4           1      filho\
+1.5           1        teu\
+1.6           1        nao\
+1.7           1       foge\
+1.8           1          a\
+1.9           1       luta\
+1.10          1          o\
+1.11          1       povo\
+1.12          1 brasileiro\
+1.13          1     merece\
+1.14          1   respeito\
+1.15          1        por\
+1.16          1         um\
+1.17          1     brasil\
+1.18          1        com\
+1.19          1    justica\
+> data("oplexicon_v3.0")\
+> data("sentiLex_lem_PT02")\
+> op30 <- oplexicon_v3.0\
+> sent <- sentiLex_lem_PT02\
+> x <- df1_unnested %>% \
++   left_join(op30, by = "term") %>% \
++   left_join(sent %>% select(term, lex_polarity = polarity), by = "term") %>% \
++   select(comment_id, term, polarity, lex_polarity)\
+> nrow(x)\
+[1] 27512\
+> sum(is.na(x$polarity))\
+[1] 23364\
+> sum(is.na(x$lex_polarity))\
+[1] 26161\
+> x1 <- x %>%\
++   filter(polarity != 0) %>%\
++   mutate(sentiment_polarity = ifelse(polarity < 0, "Negativo","Positivo"))\
+> x1.1 <- table(x1$sentiment_polarity)\
+> barplot(x1.1, main="Sentimento dos discursos - oplexicon_v3.0", \
++         ylab="Quantidade de palavras", col = c('red','blue'))\
+> x2 <- x %>%\
++   filter(lex_polarity != 0) %>%\
++   mutate(sentiment_lex_polarity = ifelse(lex_polarity < 0, "Negativo", "Positivo"))\
+> x2.1 <- table(x2$sentiment_lex_polarity)\
+> barplot(x2.1, main="Sentimento dos discursos - sentiLex_lem_PT02", \
++         ylab="Quantidade de palavras", col = c('red','blue'))\
+> }
